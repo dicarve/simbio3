@@ -1,0 +1,14 @@
+{
+    "name": "simbio/simbio3",
+    "description": "SIMBIO 3 PHP Framework",
+    "type": "library",
+    "license": "GPL v3",
+    "authors": [
+        {
+            "name": "Arie Nugraha",
+            "email": "dicarve@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {}
+}
