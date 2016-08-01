@@ -28,6 +28,7 @@ abstract class SimbioController
   protected $views = array();
   private $site_base_url = '';
   private $site_base_path = '';
+  private $loaded_models = array();
 
   public function __construct($config) {
 	$this->config = $config;
@@ -79,7 +80,10 @@ abstract class SimbioController
    **/
   protected function loadModel($model_path) {
 	if (strpos($model_path, '/') === false) {
+	  // get module name
 	  $module = get_class($this);
+	  // get model name
+	  $model = $model_path;
 	  $model_subdir_path = $model_path;
 	  $model_filepath = str_replace('<modulename>', $module, \Simbio\Simbio::APPS_MODELS_DIR).$model_subdir_path.'.php';
 	} else {
@@ -95,8 +99,14 @@ abstract class SimbioController
 	$model_filepath = str_replace('<modulename>', $module, \Simbio\Simbio::APPS_MODELS_DIR).$model_subdir_path.'.php';
 
 	if (file_exists($model_filepath)) {
-	  require $model_file;
-	  $this->{$model} = new $model;
+	  // register loaded model to memory
+	  $this->loaded_models[$model] = $model;
+	  // require the class
+	  require_once $model_filepath;
+	  $this->{$model} = new $model($this->config);
+	  if ($this->db) {
+		$this->{$model}->setDB($this->db);
+	  }
 	  return $this->{$model};
 	} else {
 	  throw new \Exception('Cannot found model '.$model_filepath);

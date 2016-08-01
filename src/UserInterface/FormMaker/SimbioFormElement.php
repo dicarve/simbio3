@@ -141,26 +141,6 @@ class SimbioFormElement
   }
 }
 
-/* abstract form element class to be inherited by form element classes */
-abstract class AbstractSimbioFormElement
-{
-  public $element_type = 'text';
-  public $element_name = '';
-  public $element_value;
-  public $element_options;
-  public $element_attr = '';
-  public $element_css_class = '';
-  public $element_disabled = false;
-  public $element_helptext = '';
-
-  /**
-   * Below method must be inherited
-   *
-   * @return  string
-   */
-  abstract protected function out();
-}
-
 /* Text field object */
 class SimbioFormElementText extends AbstractSimbioFormElement
 {

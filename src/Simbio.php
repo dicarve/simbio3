@@ -75,7 +75,9 @@ class Simbio
     foreach (new \DirectoryIterator(self::APPS_CONFIG_DIR) as $fileInfo) {
         if ($fileInfo->isDot()) continue;
         if ($fileInfo->isDir()) continue;
-        // echo $fileInfo->getFilename() . "<br>\n";
+		if (strpos($fileInfo->getPathname(), '.php') === false) {
+		  continue;
+		}
         require $fileInfo->getPathname();
     }
     $this->config = $sysconf;

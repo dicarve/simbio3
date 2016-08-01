@@ -2,9 +2,33 @@
 Simbio 3 is a simple PHP framework used mainly by SLiMS (Senayan Library Management System)  project
 
 ## Installation
-To install Simbio in your web project just run composer :
+To install Simbio in your web project just run Composer command line inside your web project directory:
 
     composer require simbio/simbio3
+
+Or if you install manually without using Composer just put all Simbio source code inside some directory (example: simbio3) and include it at top of index.php:
+
+    <?php
+    require_once 'simbio3/Simbio.php'
+    require_once 'simbio3/SimbioController.php'
+
+### Autoload configuration
+To make all Simbio classes loaded automatically by composer you need to edit composer.json file on your web project directory so it will looks like below:
+
+	{
+	    "require": {
+	        "simbio/simbio3": "*"
+	    },
+	    "autoload": {
+	        "psr-4": {
+	            "Simbio\\": "./vendor/simbio/simbio3/src/"
+	        }
+	    }
+	}
+
+after you change the composer.json file you need to reload composer autoload configuration index to make it work by invoking below command in command line:
+
+	composer dump-autoload -o
 
 ## Using Simbio router class
 Create index.php on your web project root directory with below code:
@@ -26,17 +50,24 @@ create minimum directory structure like below :
     /my-web-project-dir/apps/config/
     /my-web-project-dir/apps/themes/
 
-## create an application module
+## Create an application module
 To create a module for your web project just follow below simple step:
-1. Create directory under `/my-web-project-dir/apps/modules`. For example to for module "Bibliography" the directory will be `/my-web-project-dir/apps/modules/Bibliography`,
-the first letter MUST be an uppercase
-2. Inside `Bibliography` module directory, Create file named `Bibliography.php` containing `Bibliography` class definition
-3. Create `views` and `models` directory inside `Bibliography` directory
-4. Inside `Bibliography` class you must write minimum code like below:
 
+- Create directory under `/my-web-project-dir/apps/modules`. For example to for module "Bibliography" the directory will be `/my-web-project-dir/apps/modules/Bibliography`,the first letter MUST be an uppercase
+- Inside `Bibliography` module directory, Create file named `Bibliography.php` containing `Bibliography` class definition
+- Create `views` and `models` directory inside `Bibliography` directory
+- Inside `Bibliography` class you must write minimum code like below:
+
+
+Bibliography controller source code:
 
     <?php
     class Bibliography extends \Simbio\SimbioController {
+    	 /**
+    	  * The parent class \Simbio\SimbioController constructor MUST be
+    	  * also invoked in controller constructor
+    	  *
+    	  **/
         public function __construct($apps_config) {
             parent::__construct($apps_config);
         }

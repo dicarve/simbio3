@@ -1,0 +1,10 @@
+{
+    "require": {
+        "simbio/simbio3": "*"
+    },
+	"autoload": {
+	    "psr-4": {
+            "Simbio\\": "./vendor/simbio/simbio3/src/"
+        }
+    }
+}
